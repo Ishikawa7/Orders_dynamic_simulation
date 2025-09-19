@@ -12,6 +12,7 @@ class Order:
         }
         self.generate_random_items()
         self.time = 2
+        self.priority = 0
         self.priority = self.calculate_priority()
 
     def __repr__(self):
@@ -21,9 +22,9 @@ class Order:
         self.priority = (self.items["M1"] * 3 + self.items["M2"] * 2 + self.items["M3"]) * np.log10(self.time + 2)
 
     def generate_random_items(self):
-        x1 = random.randint(0, 100) + 1
-        x2 = random.randint(0, 100 - x1) + 1
-        x3 = 100 - x1 - x2 + 1
+        x1 = random.randint(0, 100+1) + 1
+        x2 = random.randint(0, 100 - x1+2) + 1
+        x3 = 100 - x1 - x2 + 3
 
         # randomly shuffle x1, x2, x3
         items = [x1, x2, x3]
@@ -124,7 +125,7 @@ class Storage:
     def generate_n_orders(self):
         n = np.random.randint(0, 4) 
         for i in range(n):
-            self.add_order(Order(f"{self.time}-{len(self.orders)+1}"))
+            self.add_order(Order(str(self.time)))
         return True
     
     def run_simulation_step(self, new_orders=[]):
